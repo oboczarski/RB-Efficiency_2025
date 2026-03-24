@@ -30,6 +30,8 @@ const inverseScore = (rank, maxRank = 40) => Math.max(0, Math.min(100, ((maxRank
 
 const panelClass =
   "rounded-[28px] border border-white/10 bg-white/[0.05] backdrop-blur-2xl shadow-[0_10px_50px_rgba(0,0,0,0.35)]"
+const DESKTOP_SCALE = 0.75
+const DESKTOP_BREAKPOINT = 1280
 
 function IconBadge({ children }) {
   return (
@@ -220,6 +222,57 @@ function SectionTitle({ icon, eyebrow, title, subtitle }) {
   )
 }
 
+function DesktopScaleFrame({ children }) {
+  const contentRef = React.useRef(null)
+  const [scaledHeight, setScaledHeight] = React.useState(null)
+
+  React.useLayoutEffect(() => {
+    const content = contentRef.current
+    if (!content) return undefined
+
+    const updateScale = () => {
+      if (window.innerWidth < DESKTOP_BREAKPOINT) {
+        setScaledHeight(null)
+        return
+      }
+
+      setScaledHeight(content.scrollHeight * DESKTOP_SCALE)
+    }
+
+    updateScale()
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateScale()
+    })
+
+    resizeObserver.observe(content)
+    window.addEventListener("resize", updateScale)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener("resize", updateScale)
+    }
+  }, [])
+
+  return (
+    <div className="xl:flex xl:justify-center" style={scaledHeight ? { height: `${scaledHeight}px` } : undefined}>
+      <div
+        ref={contentRef}
+        style={
+          scaledHeight
+            ? {
+                transform: `scale(${DESKTOP_SCALE})`,
+                transformOrigin: "top center",
+              }
+            : undefined
+        }
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
 export default function RBRankingInfographic() {
   const players = buildDerivedPlayers()
   const sortedByAvg = [...players].sort((a, b) => a.avg - b.avg)
@@ -283,244 +336,246 @@ export default function RBRankingInfographic() {
         <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.10),transparent_18%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.05),transparent_20%)]" />
 
-        <div className="relative mx-auto max-w-[1820px] px-5 py-8 md:px-8 xl:px-10">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-            <span className="text-[#d0b472]">✦</span>
-            RB Ranking Infographic
-          </div>
-
-          <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(360px,0.72fr)]">
-            <div className="min-w-0 space-y-6">
-              <div className={`${panelClass} relative overflow-hidden p-6 md:p-8`}>
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(208,180,114,0.12),transparent_32%)]" />
-                <div className="relative">
-                  <div className="mb-3 flex items-center gap-3">
-                    <IconBadge>📊</IconBadge>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/55">Lower rank = better performance</p>
-                      <h1 className="mt-1 text-3xl font-semibold leading-tight md:text-5xl">Rushing + Receiving Rank Profile</h1>
-                    </div>
-                  </div>
-                  <p className="max-w-[900px] text-sm leading-7 text-white/72 md:text-[15px]">
-                    Single-page comparison of 10 RBs across eight ranking-based efficiency and usage metrics. The board highlights category leaders, overall average rank, and where each profile is strongest or most vulnerable.
-                  </p>
-                </div>
-              </div>
+        <DesktopScaleFrame>
+          <div className="relative mx-auto max-w-[1820px] px-5 py-8 md:px-8 xl:px-10">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
+              <span className="text-[#d0b472]">✦</span>
+              RB Ranking Infographic
             </div>
 
-            <div className="min-w-0">
-              <div className={`${panelClass} p-5 md:p-6`}>
-                <SectionTitle icon="📈" eyebrow="Average-rank leaderboard" title="Top five by AVG" subtitle="Overall ordering by the provided AVG column." />
-                <div className="space-y-3">
-                  {sortedByAvg.slice(0, 5).map((player, index) => (
-                    <div key={player.name} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-                      <div className="mb-2 flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 items-center gap-3">
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/90">{index + 1}</div>
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-white">{player.name}</p>
-                            <p className="text-xs uppercase tracking-[0.2em] text-white/45">{player.team} • {player.pos}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
-                          <p className="text-[10px] uppercase tracking-[0.2em] text-white/45">avg rank</p>
-                        </div>
-                      </div>
-                      <ProgressBar value={inverseScore(player.avg, 40)} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
-            {insightCards.map((card) => (
-              <div key={card.title + card.eyebrow} className={`${panelClass} relative overflow-hidden p-5`}>
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(208,180,114,0.10),transparent_30%)]" />
-                <div className="relative">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/52">{card.eyebrow}</p>
-                    <IconBadge>{card.icon}</IconBadge>
-                  </div>
-                  <h2 className="text-xl font-semibold tracking-tight text-white">{card.title}</h2>
-                  <p className="mt-1 text-sm font-medium text-[#f5deb3]">{card.detail}</p>
-                  <p className="mt-3 text-sm leading-6 text-white/68">{card.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_500px]">
-            <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Rank matrix</p>
-                  <h3 className="mt-1 text-2xl font-semibold">Player-by-player category ranks</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <StatPill tone="elite">1–5 elite</StatPill>
-                  <StatPill tone="strong">6–10 strong</StatPill>
-                  <StatPill tone="mid">11–20 mid</StatPill>
-                  <StatPill tone="weak">21+ weak</StatPill>
-                </div>
-              </div>
-
-              <div className="overflow-x-auto xl:overflow-visible">
-                <div className="min-w-[960px] xl:min-w-0">
-                  <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">
-                    <div className="px-3">Player</div>
-                    {METRICS.map((metric) => (
-                      <div key={metric.key} className="px-2 text-center">{metric.short}</div>
-                    ))}
-                    <div className="px-3 text-center">AVG</div>
-                  </div>
-
-                  <div className="space-y-2">
-                    {sortedByAvg.map((player) => (
-                      <div
-                        key={player.name}
-                        className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
-                      >
-                        <div className="flex items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
-                          <div>
-                            <p className="truncate text-sm font-semibold text-white">{player.name}</p>
-                            <p className="truncate text-[11px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
-                          </div>
-                        </div>
-
-                        {METRICS.map((metric) => (
-                          <div
-                            key={player.name + metric.key}
-                            className="flex min-h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-sm font-semibold"
-                            style={getCellStyle(player[metric.key])}
-                          >
-                            {player[metric.key]}
-                          </div>
-                        ))}
-
-                        <AvgCell avg={player.avg} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className={`${panelClass} self-start p-5 md:p-6`}>
-              <div className="mb-5 flex items-end justify-between gap-4">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Full leaderboard</p>
-                  <h3 className="mt-1 text-2xl font-semibold">Overall average rank</h3>
-                </div>
-                <div className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">Best to worst</div>
-              </div>
-
-              <div className="space-y-3">
-                {sortedByAvg.map((player, index) => (
-                  <div
-                    key={player.name}
-                    className={`rounded-[24px] border px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
-                      index === 0
-                        ? "border-[#d0b472]/35 bg-[linear-gradient(135deg,rgba(208,180,114,0.18),rgba(255,255,255,0.05))]"
-                        : "border-white/10 bg-white/[0.04]"
-                    }`}
-                  >
-                    <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-base font-semibold text-white/90">{index + 1}</div>
-
+            <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(360px,0.72fr)]">
+              <div className="min-w-0 space-y-6">
+                <div className={`${panelClass} relative overflow-hidden p-6 md:p-8`}>
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(208,180,114,0.12),transparent_32%)]" />
+                  <div className="relative">
+                    <div className="mb-3 flex items-center gap-3">
+                      <IconBadge>📊</IconBadge>
                       <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <p className="text-[15px] font-semibold text-white">{player.name}</p>
-                          <StatPill>{player.team}</StatPill>
-                          <StatPill>Top-3: {player.top3}</StatPill>
-                          <StatPill>Top-5: {player.top5}</StatPill>
-                        </div>
-                        <div className="mt-3">
-                          <ProgressBar value={inverseScore(player.avg, 40)} />
-                        </div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/55">Lower rank = better performance</p>
+                        <h1 className="mt-1 text-3xl font-semibold leading-tight md:text-5xl">Rushing + Receiving Rank Profile</h1>
                       </div>
+                    </div>
+                    <p className="max-w-[900px] text-sm leading-7 text-white/72 md:text-[15px]">
+                      Single-page comparison of 10 RBs across eight ranking-based efficiency and usage metrics. The board highlights category leaders, overall average rank, and where each profile is strongest or most vulnerable.
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                      <div className="text-right">
-                        <p className="text-2xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
-                        <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">avg rank</p>
+              <div className="min-w-0">
+                <div className={`${panelClass} p-5 md:p-6`}>
+                  <SectionTitle icon="📈" eyebrow="Average-rank leaderboard" title="Top five by AVG" subtitle="Overall ordering by the provided AVG column." />
+                  <div className="space-y-3">
+                    {sortedByAvg.slice(0, 5).map((player, index) => (
+                      <div key={player.name} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                        <div className="mb-2 flex items-center justify-between gap-3">
+                          <div className="flex min-w-0 items-center gap-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/90">{index + 1}</div>
+                            <div className="min-w-0">
+                              <p className="truncate text-sm font-semibold text-white">{player.name}</p>
+                              <p className="text-xs uppercase tracking-[0.2em] text-white/45">{player.team} • {player.pos}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-white/45">avg rank</p>
+                          </div>
+                        </div>
+                        <ProgressBar value={inverseScore(player.avg, 40)} />
                       </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
+              {insightCards.map((card) => (
+                <div key={card.title + card.eyebrow} className={`${panelClass} relative overflow-hidden p-5`}>
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(208,180,114,0.10),transparent_30%)]" />
+                  <div className="relative">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/52">{card.eyebrow}</p>
+                      <IconBadge>{card.icon}</IconBadge>
+                    </div>
+                    <h2 className="text-xl font-semibold tracking-tight text-white">{card.title}</h2>
+                    <p className="mt-1 text-sm font-medium text-[#f5deb3]">{card.detail}</p>
+                    <p className="mt-3 text-sm leading-6 text-white/68">{card.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_500px]">
+              <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Rank matrix</p>
+                    <h3 className="mt-1 text-2xl font-semibold">Player-by-player category ranks</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <StatPill tone="elite">1–5 elite</StatPill>
+                    <StatPill tone="strong">6–10 strong</StatPill>
+                    <StatPill tone="mid">11–20 mid</StatPill>
+                    <StatPill tone="weak">21+ weak</StatPill>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto xl:overflow-visible">
+                  <div className="min-w-[960px] xl:min-w-0">
+                    <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                      <div className="px-3">Player</div>
+                      {METRICS.map((metric) => (
+                        <div key={metric.key} className="px-2 text-center">{metric.short}</div>
+                      ))}
+                      <div className="px-3 text-center">AVG</div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {sortedByAvg.map((player) => (
+                        <div
+                          key={player.name}
+                          className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                        >
+                          <div className="flex items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
+                            <div>
+                              <p className="truncate text-sm font-semibold text-white">{player.name}</p>
+                              <p className="truncate text-[11px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
+                            </div>
+                          </div>
+
+                          {METRICS.map((metric) => (
+                            <div
+                              key={player.name + metric.key}
+                              className="flex min-h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-sm font-semibold"
+                              style={getCellStyle(player[metric.key])}
+                            >
+                              {player[metric.key]}
+                            </div>
+                          ))}
+
+                          <AvgCell avg={player.avg} />
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-6 grid items-start gap-6 xl:grid-cols-[460px_minmax(0,1fr)]">
-            <div className="space-y-6">
-              <div className={`${panelClass} p-5 md:p-6`}>
-                <SectionTitle icon="🏅" eyebrow="Category leaders" title="Best rank in each metric" />
+              <div className={`${panelClass} self-start p-5 md:p-6`}>
+                <div className="mb-5 flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Full leaderboard</p>
+                    <h3 className="mt-1 text-2xl font-semibold">Overall average rank</h3>
+                  </div>
+                  <div className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">Best to worst</div>
+                </div>
+
                 <div className="space-y-3">
-                  {metricLeaders.map((metric) => (
-                    <div key={metric.key} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-                      <div className="mb-2 flex items-center justify-between gap-4">
-                        <div>
-                          <p className="text-sm font-semibold text-white">{metric.label}</p>
-                          <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">{metric.short}</p>
-                        </div>
-                        <StatPill tone="elite">Rank {metric.bestRank}</StatPill>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {metric.leaders.map((leader) => (
-                          <span key={metric.key + leader.name} className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-medium text-white/82">
-                            {leader.name}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className={`${panelClass} flex items-center justify-center p-6`}>
-                <div className="text-center">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/45">Best overall</div>
-                  <div className="mt-2 text-2xl font-semibold text-white">{bestOverall.name}</div>
-                  <div className="mt-1 text-[#f5deb3]">{bestOverall.avg.toFixed(1)} avg rank</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className={`${panelClass} p-5 md:p-6`}>
-                <SectionTitle icon="🧠" eyebrow="Key readouts" title="Analytical takeaways" />
-                <div className="space-y-3">
-                  {takeaways.map((line, index) => (
-                    <div key={index} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/74">
-                      {line}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className={`${panelClass} p-5 md:p-6`}>
-                <SectionTitle icon="🧪" eyebrow="Sanity checks" title="Embedded data tests" />
-                <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
-                  {checks.map((check) => (
+                  {sortedByAvg.map((player, index) => (
                     <div
-                      key={check.label}
-                      className={`rounded-2xl border px-4 py-3 text-sm ${
-                        check.pass
-                          ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-100"
-                          : "border-rose-400/20 bg-rose-400/10 text-rose-100"
+                      key={player.name}
+                      className={`rounded-[24px] border px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
+                        index === 0
+                          ? "border-[#d0b472]/35 bg-[linear-gradient(135deg,rgba(208,180,114,0.18),rgba(255,255,255,0.05))]"
+                          : "border-white/10 bg-white/[0.04]"
                       }`}
                     >
-                      <div className="mb-1 text-base">{check.pass ? "✓" : "✕"}</div>
-                      <div className="leading-6">{check.label}</div>
+                      <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-base font-semibold text-white/90">{index + 1}</div>
+
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="text-[15px] font-semibold text-white">{player.name}</p>
+                            <StatPill>{player.team}</StatPill>
+                            <StatPill>Top-3: {player.top3}</StatPill>
+                            <StatPill>Top-5: {player.top5}</StatPill>
+                          </div>
+                          <div className="mt-3">
+                            <ProgressBar value={inverseScore(player.avg, 40)} />
+                          </div>
+                        </div>
+
+                        <div className="text-right">
+                          <p className="text-2xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">avg rank</p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+
+            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[460px_minmax(0,1fr)]">
+              <div className="space-y-6">
+                <div className={`${panelClass} p-5 md:p-6`}>
+                  <SectionTitle icon="🏅" eyebrow="Category leaders" title="Best rank in each metric" />
+                  <div className="space-y-3">
+                    {metricLeaders.map((metric) => (
+                      <div key={metric.key} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                        <div className="mb-2 flex items-center justify-between gap-4">
+                          <div>
+                            <p className="text-sm font-semibold text-white">{metric.label}</p>
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">{metric.short}</p>
+                          </div>
+                          <StatPill tone="elite">Rank {metric.bestRank}</StatPill>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {metric.leaders.map((leader) => (
+                            <span key={metric.key + leader.name} className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-medium text-white/82">
+                              {leader.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className={`${panelClass} flex items-center justify-center p-6`}>
+                  <div className="text-center">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/45">Best overall</div>
+                    <div className="mt-2 text-2xl font-semibold text-white">{bestOverall.name}</div>
+                    <div className="mt-1 text-[#f5deb3]">{bestOverall.avg.toFixed(1)} avg rank</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className={`${panelClass} p-5 md:p-6`}>
+                  <SectionTitle icon="🧠" eyebrow="Key readouts" title="Analytical takeaways" />
+                  <div className="space-y-3">
+                    {takeaways.map((line, index) => (
+                      <div key={index} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/74">
+                        {line}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className={`${panelClass} p-5 md:p-6`}>
+                  <SectionTitle icon="🧪" eyebrow="Sanity checks" title="Embedded data tests" />
+                  <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+                    {checks.map((check) => (
+                      <div
+                        key={check.label}
+                        className={`rounded-2xl border px-4 py-3 text-sm ${
+                          check.pass
+                            ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-100"
+                            : "border-rose-400/20 bg-rose-400/10 text-rose-100"
+                        }`}
+                      >
+                        <div className="mb-1 text-base">{check.pass ? "✓" : "✕"}</div>
+                        <div className="leading-6">{check.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </DesktopScaleFrame>
       </div>
     </div>
   )
