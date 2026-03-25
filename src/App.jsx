@@ -439,8 +439,8 @@ export default function RBRankingInfographic() {
                         >
                           <div className="flex items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
                             <div>
-                              <p className="truncate text-sm font-semibold text-white">{player.name}</p>
-                              <p className="truncate text-[11px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
+                              <p className="truncate text-lg font-semibold text-white">{player.name}</p>
+                              <p className="truncate text-[14px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
                             </div>
                           </div>
 
