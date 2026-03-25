@@ -32,6 +32,8 @@ const panelClass =
   "rounded-[28px] border border-white/10 bg-white/[0.05] backdrop-blur-2xl shadow-[0_10px_50px_rgba(0,0,0,0.35)]"
 const DESKTOP_SCALE = 0.75
 const DESKTOP_BREAKPOINT = 1280
+const matrixPlayerCellClass =
+  "flex h-[72px] items-center justify-center rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(34,46,62,0.78),rgba(28,39,54,0.68))] px-3 py-3 shadow-[inset_0_0_2px_0px_#D0B472,inset_0_0_35px_0px_#e0c48224]"
 
 function IconBadge({ children }) {
   return (
@@ -203,8 +205,8 @@ function AvgCell({ avg }) {
   return (
     <div className="relative flex h-[72px] flex-col items-center justify-center overflow-hidden rounded-2xl px-2 py-3" style={tone.wrap}>
       <div className={`pointer-events-none absolute inset-x-3 top-2 h-[3px] rounded-full opacity-95 ${tone.accent}`} />
-      <div className={`text-lg font-semibold ${tone.value}`}>{avg.toFixed(1)}</div>
-      <div className={`text-[10px] uppercase tracking-[0.18em] ${tone.label}`}>avg</div>
+      <div className={`text-[25px] font-semibold ${tone.value}`}>{avg.toFixed(1)}</div>
+      <div className={`text-[12px] uppercase tracking-[0.18em] ${tone.label}`}>avg</div>
     </div>
   )
 }
@@ -406,7 +408,7 @@ export default function RBRankingInfographic() {
               ))}
             </div>
 
-            <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[980px_620px]">
+            <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[1180px_620px]">
               <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                   <div>
@@ -423,35 +425,35 @@ export default function RBRankingInfographic() {
 
                 <div className="overflow-x-auto xl:overflow-visible">
                   <div className="w-fit min-w-0">
-                    <div className="grid w-fit grid-cols-[158px_repeat(8,70px)_92px] gap-2 pb-2 text-white/48">
-                      <div className="flex justify-center items-center px-3 text-[16px] font-semibold uppercase text-white/48">Player</div>
+                    <div className="grid w-fit grid-cols-[188px_repeat(8,95px)_92px] gap-2 pb-2 text-white/48">
+                      <div className="flex justify-center items-center px-3 text-[22px] font-bold uppercase text-white/48">Player</div>
                       {METRICS.map((metric) => (
                         <div key={metric.key} className="flex min-h-[34px] items-center justify-center px-2 text-center">
-                          <div className="whitespace-nowrap text-[15px] font-semibold leading-none text-white/52 xl:text-[16px]">
+                          <div className="whitespace-nowrap text-[15px] font-semibold leading-none text-white/52 xl:text-[22px] tracking-tighter ">
                             {metric.short}
                           </div>
                         </div>
                       ))}
-                      <div className="flex items-center justify-center px-3 text-center text-[18px] font-semibold uppercase text-[#c5b48b] ">AVG</div>
+                      <div className="flex items-center justify-center px-3 text-center text-[23px] font-bold uppercase text-[#c5b48b] ">AVG</div>
                     </div>
 
                     <div className="space-y-2">
                       {sortedByAvg.map((player) => (
                         <div
                           key={player.name}
-                          className="grid h-[88px] w-fit grid-cols-[158px_repeat(8,70px)_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                          className="grid h-[88px] w-fit grid-cols-[188px_repeat(8,95px)_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                         >
-                          <div className="flex h-[72px] items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
-                            <div>
-                              <p className="truncate text-lg font-semibold text-white">{player.name}</p>
-                              <p className="truncate text-[14px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
+                          <div className={matrixPlayerCellClass}>
+                            <div className="flex w-full flex-col items-center justify-center text-center">
+                              <p className="w-full text-nowrap text-xl font-light leading-tight text-white">{player.name}</p>
+                              <p className="mt-1 w-full truncate text-[16px] uppercase tracking-[0.16em] text-white/42">{player.team} • {player.pos}</p>
                             </div>
                           </div>
 
                           {METRICS.map((metric) => (
                             <div
                               key={player.name + metric.key}
-                              className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[17px] font-semibold leading-none"
+                              className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[24px] font-light leading-none"
                               style={getCellStyle(player[metric.key])}
                             >
                               {player[metric.key]}
