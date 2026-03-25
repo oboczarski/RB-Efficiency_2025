@@ -12,16 +12,16 @@ const METRICS = [
 ]
 
 const PLAYERS = [
-  { name: "De'Von Achane", pos: "RB", team: "MIA", ypc: 1, ycoa: 1, mtfa: 2, ryoe: 4, explsv: 1, impg: 5, recypg: 4, ts: 3, avg: 2.6 },
-  { name: "Bijan Robinson", pos: "RB", team: "ATL", ypc: 4, ycoa: 5, mtfa: 3, ryoe: 3, explsv: 8, impg: 3, recypg: 2, ts: 2, avg: 3.8 },
-  { name: "Jonathan Taylor", pos: "RB", team: "IND", ypc: 9, ycoa: 7, mtfa: 12, ryoe: 5, explsv: 15, impg: 2, recypg: 11, ts: 8, avg: 8.6 },
-  { name: "Jahmyr Gibbs", pos: "RB", team: "DET", ypc: 8, ycoa: 38, mtfa: 9, ryoe: 6, explsv: 16, impg: 5, recypg: 3, ts: 4, avg: 11.1 },
-  { name: "Jaylen Warren", pos: "RB", team: "PIT", ypc: 20, ycoa: 4, mtfa: 1, ryoe: 8, explsv: 17, impg: 15, recypg: 15, ts: 21, avg: 12.6 },
-  { name: "James Cook", pos: "RB", team: "BUF", ypc: 2, ycoa: 13, mtfa: 30, ryoe: 2, explsv: 7, impg: 9, recypg: 23, ts: 23, avg: 13.6 },
-  { name: "Kenneth Gainwell", pos: "RB", team: "PIT", ypc: 14, ycoa: 15, mtfa: 16, ryoe: 25, explsv: 6, impg: 27, recypg: 5, ts: 5, avg: 14.1 },
-  { name: "Kyren Williams", pos: "RB", team: "LAR", ypc: 11, ycoa: 9, mtfa: 20, ryoe: 7, explsv: 23, impg: 4, recypg: 28, ts: 18, avg: 15.0 },
-  { name: "Chase Brown", pos: "RB", team: "CIN", ypc: 25, ycoa: 18, mtfa: 17, ryoe: 24, explsv: 20, impg: 15, recypg: 8, ts: 7, avg: 16.8 },
-  { name: "Derrick Henry", pos: "RB", team: "BAL", ypc: 3, ycoa: 2, mtfa: 39, ryoe: 1, explsv: 10, impg: 5, recypg: 40, ts: 37, avg: 17.1 },
+  { name: "D. Achane", pos: "RB", team: "MIA", ypc: 1, ycoa: 1, mtfa: 2, ryoe: 4, explsv: 1, impg: 5, recypg: 4, ts: 3, avg: 2.6 },
+  { name: "B. Robinson", pos: "RB", team: "ATL", ypc: 4, ycoa: 5, mtfa: 3, ryoe: 3, explsv: 8, impg: 3, recypg: 2, ts: 2, avg: 3.8 },
+  { name: "J. Taylor", pos: "RB", team: "IND", ypc: 9, ycoa: 7, mtfa: 12, ryoe: 5, explsv: 15, impg: 2, recypg: 11, ts: 8, avg: 8.6 },
+  { name: "J. Gibbs", pos: "RB", team: "DET", ypc: 8, ycoa: 38, mtfa: 9, ryoe: 6, explsv: 16, impg: 5, recypg: 3, ts: 4, avg: 11.1 },
+  { name: "J. Warren", pos: "RB", team: "PIT", ypc: 20, ycoa: 4, mtfa: 1, ryoe: 8, explsv: 17, impg: 15, recypg: 15, ts: 21, avg: 12.6 },
+  { name: "J. Cook", pos: "RB", team: "BUF", ypc: 2, ycoa: 13, mtfa: 30, ryoe: 2, explsv: 7, impg: 9, recypg: 23, ts: 23, avg: 13.6 },
+  { name: "K. Gainwell", pos: "RB", team: "PIT", ypc: 14, ycoa: 15, mtfa: 16, ryoe: 25, explsv: 6, impg: 27, recypg: 5, ts: 5, avg: 14.1 },
+  { name: "K. Williams", pos: "RB", team: "LAR", ypc: 11, ycoa: 9, mtfa: 20, ryoe: 7, explsv: 23, impg: 4, recypg: 28, ts: 18, avg: 15.0 },
+  { name: "C. Brown", pos: "RB", team: "CIN", ypc: 25, ycoa: 18, mtfa: 17, ryoe: 24, explsv: 20, impg: 15, recypg: 8, ts: 7, avg: 16.8 },
+  { name: "D. Henry", pos: "RB", team: "BAL", ypc: 3, ycoa: 2, mtfa: 39, ryoe: 1, explsv: 10, impg: 5, recypg: 40, ts: 37, avg: 17.1 },
 ]
 
 const average = (arr) => arr.reduce((sum, n) => sum + n, 0) / arr.length
@@ -438,7 +438,7 @@ export default function RBRankingInfographic() {
                       <span>Dynasty Hub • Advanced Analytics</span>→
                       <span className="text-[#9390ff]">dynastyhub.netlify.app</span>
                     </div>
-                    <p className="text-[#835aff] text-[13px] mr-9">Rankings Matrix • Top 10</p>
+                    <p className="text-[#835aff] text-[14px] mb-0.5 mr-9">Rankings Matrix ✦ Top 10</p>
                   </div>
                   <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
                     <h3 className="text-3xl font-semibold tracking-tight">2025 RB | Efficiency Leaders Landscape</h3>
@@ -462,7 +462,7 @@ export default function RBRankingInfographic() {
                           </div>
                         </div>
                       ))}
-                      <div className="flex items-center justify-center px-3 text-center text-[23px] font-bold uppercase text-[#c5b48b] ">AVG</div>
+                      <div className="flex items-center justify-center px-3 text-center text-[23px] font-normal text-nowrap uppercase text-[#c5b48b] ">AVG RK</div>
                     </div>
 
                     <div className="space-y-2">
@@ -473,8 +473,8 @@ export default function RBRankingInfographic() {
                         >
                           <div className={matrixPlayerCellClass}>
                             <div className="flex w-full flex-col items-center justify-center text-center">
-                              <p className="w-full text-nowrap text-xl font-light leading-tight text-white">{player.name}</p>
-                              <p className="mt-1 flex w-full items-center justify-center gap-2 truncate text-[16px] uppercase tracking-[0.16em]">
+                              <p className="w-full text-nowrap text-[28px] font-thin -mb-1 leading-tight text-white">{player.name}</p>
+                              <p className="mt-1 flex w-full items-center justify-center gap-2 truncate text-[18px] uppercase tracking-[0.16em]">
                                 <span style={{ color: TEAM_COLORS[player.team] ?? "rgba(255,255,255,0.42)" }}>{player.team}</span>
                                 <span className="text-white/28">•</span>
                                 <span style={{ color: POSITION_COLOR }}>{player.pos}</span>
@@ -485,7 +485,7 @@ export default function RBRankingInfographic() {
                           {METRICS.map((metric) => (
                             <div
                               key={player.name + metric.key}
-                              className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[24px] font-light leading-none"
+                              className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[30px] font-extralight leading-none"
                               style={getCellStyle(player[metric.key])}
                             >
                               {(() => {
@@ -494,7 +494,7 @@ export default function RBRankingInfographic() {
                                 return (
                                   <span className="whitespace-nowrap leading-none">
                                     <span>{value}</span>
-                                    <span className="ml-[1px] align-baseline text-[0.69em] font-semibold leading-none opacity-90">{suffix}</span>
+                                    <span className="ml-[1px] align-baseline text-[0.72em] font-normal leading-none opacity-90">{suffix}</span>
                                   </span>
                                 )
                               })()}
