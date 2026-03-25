@@ -227,8 +227,8 @@ function AvgCell({ avg }) {
   return (
     <div className="relative flex h-[72px] flex-col items-center justify-center overflow-hidden rounded-2xl px-2 py-3" style={tone.wrap}>
       <div className={`pointer-events-none absolute inset-x-3 top-2 h-[3px] rounded-full opacity-95 ${tone.accent}`} />
-      <div className={`text-[25px] font-semibold ${tone.value}`}>{avg.toFixed(1)}</div>
-      <div className={`text-[12px] uppercase tracking-[0.18em] ${tone.label}`}>avg</div>
+      <div className={`text-[28px] -mb-1.5 font-normal ${tone.value}`}>{avg.toFixed(1)}</div>
+      <div className={`text-[14px] uppercase tracking-[0.18em] ${tone.label}`}>avg</div>
     </div>
   )
 }
@@ -432,7 +432,7 @@ export default function RBRankingInfographic() {
 
             <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[1180px_620px]">
               <div className={`${panelClass} overflow-hidden p-5 md:px-6 md:py-3`}>
-                <div className="mb-4 space-y-3 border-b border-white/8 pb-4">
+                <div className="mb-4 space-y-3 border-b border-[#dabd7bf6] pb-4">
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#835aff]">
                     <div className="flex flex-wrap text-[12px] items-center gap-x-3 gap-y-1">
                       <span>Dynasty Hub • Advanced Analytics</span>→
