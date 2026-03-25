@@ -432,7 +432,7 @@ export default function RBRankingInfographic() {
                           </div>
                         </div>
                       ))}
-                      <div className="flex items-center justify-center px-3 text-center text-[13px] font-semibold uppercase text-white/48">AVG</div>
+                      <div className="flex items-center justify-center px-3 text-center text-[18px] font-semibold uppercase text-[#d0b47299] ">AVG</div>
                     </div>
 
                     <div className="space-y-2">
