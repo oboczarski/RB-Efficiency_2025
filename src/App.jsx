@@ -479,7 +479,7 @@ export default function RBRankingInfographic() {
                   {sortedByAvg.map((player, index) => (
                     <div
                       key={player.name}
-                      className={`rounded-[24px] border px-2 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
+                      className={`rounded-[24px] border px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
                         index === 0
                           ? "border-[#d0b472]/35 bg-[linear-gradient(135deg,rgba(208,180,114,0.18),rgba(255,255,255,0.05))]"
                           : "border-white/10 bg-white/[0.04]"
