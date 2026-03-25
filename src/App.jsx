@@ -466,7 +466,7 @@ export default function RBRankingInfographic() {
                 </div>
               </div>
 
-              <div className={`${panelClass} self-start p-5 md:p-4`}>
+              <div className={`${panelClass} self-start p-5 md:p-6`}>
                 <div className="mb-5 flex items-end justify-between gap-4">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Full leaderboard</p>
@@ -475,17 +475,19 @@ export default function RBRankingInfographic() {
                   <div className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">Best to worst</div>
                 </div>
 
-                <div className="space-y-3">
+                <div aria-hidden="true" className="mb-2 h-[34px]" />
+
+                <div className="space-y-2">
                   {sortedByAvg.map((player, index) => (
                     <div
                       key={player.name}
-                      className={`rounded-[24px] border px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
+                      className={`min-h-[88px] rounded-[24px] border px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
                         index === 0
                           ? "border-[#d0b472]/35 bg-[linear-gradient(135deg,rgba(208,180,114,0.18),rgba(255,255,255,0.05))]"
                           : "border-white/10 bg-white/[0.04]"
                       }`}
                     >
-                      <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
+                      <div className="grid h-full gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-base font-semibold text-white/90">{index + 1}</div>
 
                         <div>
