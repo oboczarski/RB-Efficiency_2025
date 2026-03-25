@@ -1,14 +1,14 @@
 import React from "react"
 
 const METRICS = [
-  { key: "ypc", label: "Yards Per Carry", short: "YPC" },
-  { key: "ycoa", label: "Yards After Contact Per Attempt", short: "YCO/A" },
-  { key: "mtfa", label: "Missed Tackles Forced Per Attempt", short: "MTF/A" },
-  { key: "ryoe", label: "Rush Yards Over Expected", short: "RYOE" },
-  { key: "explsv", label: "Explosive Rush Rate", short: "EXPLSV%" },
-  { key: "impg", label: "Impact Plays (TD + 1D) Per Game", short: "IMP/G" },
-  { key: "recypg", label: "Receiving Yards Per Game", short: "recYPG" },
-  { key: "ts", label: "Target Share", short: "TS%" },
+  { key: "ypc", label: "Yards Per Carry", short: "YPC", headerLines: ["YARDS", "PER CARRY"] },
+  { key: "ycoa", label: "Yards After Contact Per Attempt", short: "YCO/A", headerLines: ["YDS AFTER CONTACT", "PER ATTEMPT"] },
+  { key: "mtfa", label: "Missed Tackles Forced Per Attempt", short: "MTF/A", headerLines: ["MISSED TACKLES FORCED", "PER ATTEMPT"] },
+  { key: "ryoe", label: "Rush Yards Over Expected", short: "RYOE", headerLines: ["RUSH YARDS", "OVER EXPECTED"] },
+  { key: "explsv", label: "Explosive Rush Rate", short: "EXPLSV%", headerLines: ["EXPLOSIVE", "RUSH RATE"] },
+  { key: "impg", label: "Impact Plays (TD + 1D) Per Game", short: "IMP/G", headerLines: ["IMPACT PLYS(TD+1D)", "PER GAME"] },
+  { key: "recypg", label: "Receiving Yards Per Game", short: "recYPG", headerLines: ["RECEIIVING YARDS", "PER GAME"] },
+  { key: "ts", label: "Target Share", short: "TS%", headerLines: ["TARGET", "SHARE"] },
 ]
 
 const PLAYERS = [
@@ -54,7 +54,7 @@ function StatPill({ children, tone = "default" }) {
             : "border-white/10 bg-white/[0.06] text-white/70"
 
   return (
-    <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] ${toneClass}`}>
+    <span className={`shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] ${toneClass}`}>
       {children}
     </span>
   )
@@ -337,7 +337,7 @@ export default function RBRankingInfographic() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.10),transparent_18%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.05),transparent_20%)]" />
 
         <DesktopScaleFrame>
-          <div className="relative mx-auto max-w-[1820px] px-5 py-8 md:px-8 xl:px-10">
+          <div className="relative mx-auto max-w-[1920px] px-5 py-8 md:px-8 xl:px-10">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
               <span className="text-[#d0b472]">✦</span>
               RB Ranking Infographic
@@ -406,7 +406,7 @@ export default function RBRankingInfographic() {
               ))}
             </div>
 
-            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_500px]">
+            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_540px]">
               <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                   <div>
@@ -423,12 +423,17 @@ export default function RBRankingInfographic() {
 
                 <div className="overflow-x-auto xl:overflow-visible">
                   <div className="min-w-[960px] xl:min-w-0">
-                    <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">
-                      <div className="px-3">Player</div>
+                    <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-white/48">
+                      <div className="flex items-center px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">Player</div>
                       {METRICS.map((metric) => (
-                        <div key={metric.key} className="px-2 text-center">{metric.short}</div>
+                        <div key={metric.key} className="flex min-h-[34px] items-center justify-center px-2 text-center">
+                          <div className="text-[9px] font-semibold uppercase leading-[1.15] tracking-[0.12em] text-white/48 xl:text-[9.5px]">
+                            <span className="block whitespace-nowrap">{metric.headerLines[0]}</span>
+                            <span className="block whitespace-nowrap">{metric.headerLines[1]}</span>
+                          </div>
+                        </div>
                       ))}
-                      <div className="px-3 text-center">AVG</div>
+                      <div className="flex items-center justify-center px-3 text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">AVG</div>
                     </div>
 
                     <div className="space-y-2">
@@ -447,7 +452,7 @@ export default function RBRankingInfographic() {
                           {METRICS.map((metric) => (
                             <div
                               key={player.name + metric.key}
-                              className="flex min-h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-sm font-semibold"
+                              className="flex min-h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[17px] font-semibold leading-none"
                               style={getCellStyle(player[metric.key])}
                             >
                               {player[metric.key]}
@@ -485,8 +490,8 @@ export default function RBRankingInfographic() {
                         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-base font-semibold text-white/90">{index + 1}</div>
 
                         <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <p className="text-[15px] font-semibold text-white">{player.name}</p>
+                          <div className="flex flex-nowrap items-center gap-2 overflow-x-auto pb-1">
+                            <p className="shrink-0 whitespace-nowrap text-[15px] font-semibold text-white">{player.name}</p>
                             <StatPill>{player.team}</StatPill>
                             <StatPill>Top-3: {player.top3}</StatPill>
                             <StatPill>Top-5: {player.top5}</StatPill>
