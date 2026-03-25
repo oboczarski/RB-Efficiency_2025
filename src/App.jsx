@@ -502,7 +502,7 @@ export default function RBRankingInfographic() {
                           </div>
                         </div>
 
-                        <div className="shrink-0 text-right">
+                        <div className="shrink-0 text-center">
                           <p className="text-2xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
                           <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">avg rank</p>
                         </div>
