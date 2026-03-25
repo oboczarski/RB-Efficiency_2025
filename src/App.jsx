@@ -56,7 +56,7 @@ function StatPill({ children, tone = "default" }) {
             : "border-white/10 bg-white/[0.06] text-white/70"
 
   return (
-    <span className={`shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] ${toneClass}`}>
+    <span className={`shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-[15px] font-semibold uppercase tracking-[0.16em] ${toneClass}`}>
       {children}
     </span>
   )
@@ -412,8 +412,8 @@ export default function RBRankingInfographic() {
               <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/52">Rank matrix</p>
-                    <h3 className="mt-1 text-2xl font-semibold">Player-by-player category ranks</h3>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/52">DYNASTY HUB • ADVANCED ANALYTICS • RANKINGS MATRIX</p>
+                    <h3 className="mt-1 text-2xl font-semibold">2025 RB | Efficiency Leaders Landscape</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <StatPill tone="elite">1–5 elite</StatPill>
