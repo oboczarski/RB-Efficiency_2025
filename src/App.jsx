@@ -424,7 +424,7 @@ export default function RBRankingInfographic() {
                 <div className="overflow-x-auto xl:overflow-visible">
                   <div className="w-fit min-w-0">
                     <div className="grid w-fit grid-cols-[158px_repeat(8,70px)_92px] gap-2 pb-2 text-white/48">
-                      <div className="flex items-center px-3 text-[16px] font-semibold uppercase text-white/48">Player</div>
+                      <div className="flex justify-center items-center px-3 text-[16px] font-semibold uppercase text-white/48">Player</div>
                       {METRICS.map((metric) => (
                         <div key={metric.key} className="flex min-h-[34px] items-center justify-center px-2 text-center">
                           <div className="whitespace-nowrap text-[15px] font-semibold leading-none text-white/52 xl:text-[16px]">
