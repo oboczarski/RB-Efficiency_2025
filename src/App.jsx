@@ -432,13 +432,16 @@ export default function RBRankingInfographic() {
 
             <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[1180px_620px]">
               <div className={`${panelClass} overflow-hidden p-5 md:px-6 md:py-3`}>
-                <div className="mb-5 space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                    <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#8350ff] ">DYNASTY HUB • ADVANCED ANALYTICS → <u>DYNASTYHUB.NETLIFY.APP</u> </p>
-                    <p className="text-[13px] mb-1 font-bold font-underline tracking-[0.18em] text-[#8350ff]"> RANKINGS MATRIX ✦ TOP 10 </p>
+                <div className="mb-4 space-y-3 border-b border-white/8 pb-4">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#835aff]">
+                    <div className="flex flex-wrap text-[12px] items-center gap-x-3 gap-y-1">
+                      <span>Dynasty Hub • Advanced Analytics</span>→
+                      <span className="text-[#9390ff]">dynastyhub.netlify.app</span>
+                    </div>
+                    <p className="text-[#835aff] text-[13px] mr-9">Rankings Matrix • Top 10</p>
                   </div>
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-                    <h3 className="text-3xl font-semibold">2025 RB | Efficiency Leaders Landscape</h3>
+                  <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
+                    <h3 className="text-3xl font-semibold tracking-tight">2025 RB | Efficiency Leaders Landscape</h3>
                     <div className="flex flex-wrap justify-end gap-2">
                       <StatPill tone="elite">1–5 elite</StatPill>
                       <StatPill tone="strong">6–10 strong</StatPill>
