@@ -201,7 +201,7 @@ function AvgCell({ avg }) {
   const tone = getAvgTone(avg)
 
   return (
-    <div className="relative flex h-full min-h-[72px] flex-col items-center justify-center overflow-hidden rounded-2xl px-2 py-3" style={tone.wrap}>
+    <div className="relative flex h-[72px] flex-col items-center justify-center overflow-hidden rounded-2xl px-2 py-3" style={tone.wrap}>
       <div className={`pointer-events-none absolute inset-x-3 top-2 h-[3px] rounded-full opacity-95 ${tone.accent}`} />
       <div className={`text-lg font-semibold ${tone.value}`}>{avg.toFixed(1)}</div>
       <div className={`text-[10px] uppercase tracking-[0.18em] ${tone.label}`}>avg</div>
@@ -406,7 +406,7 @@ export default function RBRankingInfographic() {
               ))}
             </div>
 
-            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_540px]">
+            <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[980px_620px]">
               <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                   <div>
@@ -422,8 +422,8 @@ export default function RBRankingInfographic() {
                 </div>
 
                 <div className="overflow-x-auto xl:overflow-visible">
-                  <div className="min-w-[960px] xl:min-w-0">
-                    <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-white/48">
+                  <div className="w-fit min-w-0">
+                    <div className="grid w-fit grid-cols-[158px_repeat(8,70px)_92px] gap-2 pb-2 text-white/48">
                       <div className="flex items-center px-3 text-[11px] font-semibold uppercase text-white/48">Player</div>
                       {METRICS.map((metric) => (
                         <div key={metric.key} className="flex min-h-[34px] items-center justify-center px-2 text-center">
@@ -439,9 +439,9 @@ export default function RBRankingInfographic() {
                       {sortedByAvg.map((player) => (
                         <div
                           key={player.name}
-                          className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                          className="grid h-[88px] w-fit grid-cols-[158px_repeat(8,70px)_92px] gap-2 rounded-[24px] border border-white/10 bg-white/[0.03] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
                         >
-                          <div className="flex items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
+                          <div className="flex h-[72px] items-center rounded-2xl border border-white/10 bg-white/[0.05] px-2.5 py-3">
                             <div>
                               <p className="truncate text-lg font-semibold text-white">{player.name}</p>
                               <p className="truncate text-[14px] uppercase tracking-[0.16em] text-white/45">{player.team} • {player.pos}</p>
@@ -451,7 +451,7 @@ export default function RBRankingInfographic() {
                           {METRICS.map((metric) => (
                             <div
                               key={player.name + metric.key}
-                              className="flex min-h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[17px] font-semibold leading-none"
+                              className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[17px] font-semibold leading-none"
                               style={getCellStyle(player[metric.key])}
                             >
                               {player[metric.key]}
@@ -481,28 +481,28 @@ export default function RBRankingInfographic() {
                   {sortedByAvg.map((player, index) => (
                     <div
                       key={player.name}
-                      className={`min-h-[88px] rounded-[24px] border px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
+                      className={`h-[88px] rounded-[24px] border p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] ${
                         index === 0
                           ? "border-[#d0b472]/35 bg-[linear-gradient(135deg,rgba(208,180,114,0.18),rgba(255,255,255,0.05))]"
                           : "border-white/10 bg-white/[0.04]"
                       }`}
                     >
-                      <div className="grid h-full gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
+                      <div className="grid h-[72px] grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-base font-semibold text-white/90">{index + 1}</div>
 
-                        <div>
-                          <div className="flex flex-nowrap items-center gap-2 overflow-x-auto pb-1">
+                        <div className="min-w-0">
+                          <div className="flex flex-nowrap items-center gap-2 overflow-hidden">
                             <p className="shrink-0 whitespace-nowrap text-[15px] font-semibold text-white">{player.name}</p>
                             <StatPill>{player.team}</StatPill>
                             <StatPill>Top-3: {player.top3}</StatPill>
                             <StatPill>Top-5: {player.top5}</StatPill>
                           </div>
-                          <div className="mt-3">
+                          <div className="mt-2">
                             <ProgressBar value={inverseScore(player.avg, 40)} />
                           </div>
                         </div>
 
-                        <div className="text-right">
+                        <div className="shrink-0 text-right">
                           <p className="text-2xl font-semibold text-[#f5deb3]">{player.avg.toFixed(1)}</p>
                           <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">avg rank</p>
                         </div>
