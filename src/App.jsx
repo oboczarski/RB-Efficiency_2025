@@ -3,11 +3,11 @@ import React from "react"
 const METRICS = [
   { key: "ypc", label: "Yards Per Carry", short: "YPC", headerLines: ["YARDS", "PER CARRY"] },
   { key: "ycoa", label: "Yards After Contact Per Attempt", short: "YCO/A", headerLines: ["YDS AFTER CONTACT", "PER ATTEMPT"] },
-  { key: "mtfa", label: "Missed Tackles Forced Per Attempt", short: "MTF/A", headerLines: ["MISSED TACKLES FORCED", "PER ATTEMPT"] },
+  { key: "mtfa", label: "Missed Tackles Forced Per Attempt", short: "MTF/A", headerLines: ["MISSED TKLS FORCED", "PER ATTEMPT"] },
   { key: "ryoe", label: "Rush Yards Over Expected", short: "RYOE", headerLines: ["RUSH YARDS", "OVER EXPECTED"] },
   { key: "explsv", label: "Explosive Rush Rate", short: "EXPLSV%", headerLines: ["EXPLOSIVE", "RUSH RATE"] },
   { key: "impg", label: "Impact Plays (TD + 1D) Per Game", short: "IMP/G", headerLines: ["IMPACT PLYS(TD+1D)", "PER GAME"] },
-  { key: "recypg", label: "Receiving Yards Per Game", short: "recYPG", headerLines: ["RECEIIVING YARDS", "PER GAME"] },
+  { key: "recypg", label: "Receiving Yards Per Game", short: "recYPG", headerLines: ["RECEIVING YDS", "PER GAME"] },
   { key: "ts", label: "Target Share", short: "TS%", headerLines: ["TARGET", "SHARE"] },
 ]
 
@@ -424,16 +424,16 @@ export default function RBRankingInfographic() {
                 <div className="overflow-x-auto xl:overflow-visible">
                   <div className="min-w-[960px] xl:min-w-0">
                     <div className="grid grid-cols-[170px_repeat(8,minmax(72px,1fr))_92px] gap-2 pb-2 text-white/48">
-                      <div className="flex items-center px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">Player</div>
+                      <div className="flex items-center px-3 text-[11px] font-semibold uppercase text-white/48">Player</div>
                       {METRICS.map((metric) => (
                         <div key={metric.key} className="flex min-h-[34px] items-center justify-center px-2 text-center">
-                          <div className="text-[9px] font-semibold uppercase leading-[1.15] tracking-[0.12em] text-white/48 xl:text-[9.5px]">
+                          <div className="text-[9px] font-semibold uppercase leading-[1.15] text-white/48 xl:text-[9.5px]">
                             <span className="block whitespace-nowrap">{metric.headerLines[0]}</span>
                             <span className="block whitespace-nowrap">{metric.headerLines[1]}</span>
                           </div>
                         </div>
                       ))}
-                      <div className="flex items-center justify-center px-3 text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-white/48">AVG</div>
+                      <div className="flex items-center justify-center px-3 text-center text-[11px] font-semibold uppercase text-white/48">AVG</div>
                     </div>
 
                     <div className="space-y-2">
