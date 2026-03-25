@@ -27,11 +27,33 @@ const PLAYERS = [
 const average = (arr) => arr.reduce((sum, n) => sum + n, 0) / arr.length
 const min = (arr) => Math.min(...arr)
 const inverseScore = (rank, maxRank = 40) => Math.max(0, Math.min(100, ((maxRank + 1 - rank) / maxRank) * 100))
+const getOrdinalParts = (rank) => {
+  const mod10 = rank % 10
+  const mod100 = rank % 100
+
+  if (mod10 === 1 && mod100 !== 11) return { value: rank, suffix: "st" }
+  if (mod10 === 2 && mod100 !== 12) return { value: rank, suffix: "nd" }
+  if (mod10 === 3 && mod100 !== 13) return { value: rank, suffix: "rd" }
+
+  return { value: rank, suffix: "th" }
+}
 
 const panelClass =
   "rounded-[28px] border border-white/10 bg-white/[0.05] backdrop-blur-2xl shadow-[0_10px_50px_rgba(0,0,0,0.35)]"
 const DESKTOP_SCALE = 0.75
 const DESKTOP_BREAKPOINT = 1280
+const TEAM_COLORS = {
+  MIA: "#008E97",
+  ATL: "#A71930",
+  IND: "#0659b8",
+  DET: "#0076B6",
+  PIT: "#f8c349d3",
+  BUF: "#C60C30",
+  LAR: "#024dda",
+  CIN: "#FB4F14",
+  BAL: "#6137e1",
+}
+const POSITION_COLOR = "rgba(44, 243, 153, 0.66)"
 const matrixPlayerCellClass =
   "flex h-[72px] items-center justify-center rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(34,46,62,0.78),rgba(28,39,54,0.68))] px-3 py-3 shadow-[inset_0_0_2px_0px_#D0B472,inset_0_0_35px_0px_#e0c48224]"
 
@@ -409,17 +431,20 @@ export default function RBRankingInfographic() {
             </div>
 
             <div className="mt-6 grid items-start gap-6 xl:justify-center xl:grid-cols-[1180px_620px]">
-              <div className={`${panelClass} overflow-hidden p-5 md:p-6`}>
-                <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/52">DYNASTY HUB • ADVANCED ANALYTICS • RANKINGS MATRIX</p>
-                    <h3 className="mt-1 text-2xl font-semibold">2025 RB | Efficiency Leaders Landscape</h3>
+              <div className={`${panelClass} overflow-hidden p-5 md:px-6 md:py-3`}>
+                <div className="mb-5 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                    <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#8350ff] ">DYNASTY HUB • ADVANCED ANALYTICS → <u>DYNASTYHUB.NETLIFY.APP</u> </p>
+                    <p className="text-[13px] mb-1 font-bold font-underline tracking-[0.18em] text-[#8350ff]"> RANKINGS MATRIX ✦ TOP 10 </p>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    <StatPill tone="elite">1–5 elite</StatPill>
-                    <StatPill tone="strong">6–10 strong</StatPill>
-                    <StatPill tone="mid">11–20 mid</StatPill>
-                    <StatPill tone="weak">21+ weak</StatPill>
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+                    <h3 className="text-3xl font-semibold">2025 RB | Efficiency Leaders Landscape</h3>
+                    <div className="flex flex-wrap justify-end gap-2">
+                      <StatPill tone="elite">1–5 elite</StatPill>
+                      <StatPill tone="strong">6–10 strong</StatPill>
+                      <StatPill tone="mid">11–20 mid</StatPill>
+                      <StatPill tone="weak">21+ weak</StatPill>
+                    </div>
                   </div>
                 </div>
 
@@ -446,7 +471,11 @@ export default function RBRankingInfographic() {
                           <div className={matrixPlayerCellClass}>
                             <div className="flex w-full flex-col items-center justify-center text-center">
                               <p className="w-full text-nowrap text-xl font-light leading-tight text-white">{player.name}</p>
-                              <p className="mt-1 w-full truncate text-[16px] uppercase tracking-[0.16em] text-white/42">{player.team} • {player.pos}</p>
+                              <p className="mt-1 flex w-full items-center justify-center gap-2 truncate text-[16px] uppercase tracking-[0.16em]">
+                                <span style={{ color: TEAM_COLORS[player.team] ?? "rgba(255,255,255,0.42)" }}>{player.team}</span>
+                                <span className="text-white/28">•</span>
+                                <span style={{ color: POSITION_COLOR }}>{player.pos}</span>
+                              </p>
                             </div>
                           </div>
 
@@ -456,7 +485,16 @@ export default function RBRankingInfographic() {
                               className="flex h-[72px] items-center justify-center rounded-2xl px-1.5 py-3 text-[24px] font-light leading-none"
                               style={getCellStyle(player[metric.key])}
                             >
-                              {player[metric.key]}
+                              {(() => {
+                                const { value, suffix } = getOrdinalParts(player[metric.key])
+
+                                return (
+                                  <span className="whitespace-nowrap leading-none">
+                                    <span>{value}</span>
+                                    <span className="ml-[1px] align-baseline text-[0.69em] font-semibold leading-none opacity-90">{suffix}</span>
+                                  </span>
+                                )
+                              })()}
                             </div>
                           ))}
 
